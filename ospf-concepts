@@ -175,7 +175,7 @@ Now in this secenario, if area 1 needs to reach the EIGRP network, all that is a
 
 A stub area is only directly connected to area 0 (through the ABR advertising) and is not directly connected to any autonomous systems (which the ABR handles). This scenario looks like this:  
 
-![Image](stub_d.png)  
+![Image](./media/stub_d.png)  
 
 Now in this case, since area 1 is not connected to anything other than area 0, meaning outside network communication is only through the ABR, we will only need the default route instead. This type of area is called a **Totally Stubby Area (TSA)** [ok, I'm confused too but I promise I'm not trolling, the teacher though... idk :thonk]  
 
@@ -183,7 +183,7 @@ HOWEVER, if the autonomous system IS connected to the stub area - it becomes a *
 
 HOWEVER, there is a rule saying that type 5 LSA's (made by the ASBR to advertise an autonomous system) CANNOT be sent to a stub area (da heck is going???). So an ASBR advertising the autonomous system to an area is now called a **T7 LSA**... bruh.....   
 
-![Image](stub_e.png)  
+![Image](./media/stub_e.png)  
 
 Now in this scenario we are seing individual type 3 LSA's again, which can be replaced by default type 3 LSA's. If we do this, the area then becomes a **Totally not-so-stubby area (Totally NSSA)**  
 
