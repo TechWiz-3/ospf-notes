@@ -179,7 +179,7 @@ A stub area is only directly connected to area 0 (through the ABR advertising) a
 
 Now in this case, since area 1 is not connected to anything other than area 0, meaning outside network communication is only through the ABR, we will only need the default route instead. This type of area is called a **Totally Stubby Area (TSA)** [ok, I'm confused too but I promise I'm not trolling, the teacher though... idk :thonk]  
 
-HOWEVER, if the autonomous system IS connected to the stub area - it becomes a **Not-so-stubby area (NSSA)**. (ok at this point - teacher is defintely trolling :sob:)  
+HOWEVER, if the autonomous system is connected directoy to the stub area - it becomes a **Not-so-stubby area (NSSA)**. (ok at this point - teacher is defintely trolling :sob:)  
 
 HOWEVER, there is a rule saying that type 5 LSA's (made by the ASBR to advertise an autonomous system) CANNOT be sent to a stub area (da heck is going???). So an ASBR advertising the autonomous system to an area is now called a **T7 LSA**... bruh.....   
 
@@ -200,9 +200,34 @@ Type 6 LSAs were defined for Multicast Extensions to OSPF (MOSPF) - deprecated s
 
 In the first, stub area diagram, we see that the ABR is sending two types of Type 3 LSA's.... One is the 'individual t3 LSA' this is the LSA that is advertising Area 0. The second one is the 'Default T3 LSA' which is coming through the ABR from the ASBR and contains information on reaching the EIGRP network *indirectly* by routing through the ABR.   
 
-Now at this point, if we want to cut down even more, we can make the ABR our default route anyway, and cut out the 'individual t3 LSAs'. Now this is called a 'Totally Stubby Area', which kinda makes sense right? So now instead of 2 Type 3 LSAs we only need on, leading to the ABR and Area 0.  
+Now at this point, if we want to cut down even more, we can make the ABR our default route anyway, and cut out the both type 3 LSAs replacing them with a default route to the ABR. Now this is called a 'Totally Stubby Area', which kinda makes sense right? So now instead of 2 Type 3 LSAs we only need on, leading to the ABR and Area 0.  
 
 Now, if an autonomous system (non ospf syste,) is connected to a stub area, this is called a Not so stubby area. HOWEVER, if we want to get rid of the extra type 3 LSA here, we can... and then the area is called a TOTALLY not so stubby area.  
 
-![me rn](https://c.tenor.com/x0OZJJFjCRQAAAAC/monkey-pissed.gif)
+![me rn](https://c.tenor.com/x0OZJJFjCRQAAAAC/monkey-pissed.gif)  
+
+
+Using an external source because I just love stubs, this is what it's free version has to say:  
+
+Once a stub area is configured:
+* No LSA Type 5 (external routes to non ospf networks) - so the ABR will block this LSA
+* No ASBR in the area (if there is then it will become a not so stubby area with a type 7 LSA)
+
+Once a totally stubby area is configured:
+* No LSA Type 5 (external routes)
+* No type 3 LSA
+* No ASBR
+
+Not so stubby area:
+* No LSA Type 5
+* ASBR Allowed
+
+Totally not so stubby area:
+* No LSA Type 5
+* No LSA Type 3
+* No ASBR
+
+Now that's out of the way.... moving on... :sweat_smile: 
+
+## 
 
