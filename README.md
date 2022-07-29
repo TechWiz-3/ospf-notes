@@ -151,13 +151,45 @@ ABR's and ASBR's are not configured to be so, they automatically become so when 
 The LSA (link-state advertisement) has a number of types:
 * Router/Type 1 LSA - created by each router, used to advertise directly attached networks
 * Network/Type 2 LSA - created in transit networks for DR and BDR elections - is not used in networks with no elections
-* Summary/Type 3 LSA - created by Area Border Routers (ABRs) to advertise networks/areas to eachther
-* Type 4 and 5 are created by ASBR's for advertisement to a non-ospf network
-  * Type 4 is the 'Summary ASBR LSA' - created by an Area Border Router (ABR) to tell an area how to reach an ASBR (Autonomous System Boundary Router)
-  ![Image](./media/c.png)  
-  * Type 5 is the 'Autonomous System (AS) External LSA' - created by an ASBR to advertise networks to advertise networks that are not ospf 
-  ![Image](./media/d.png)
+* Summary/Type 3 LSA - created by Area Border Routers (ABRs) to advertise networks/areas to eachother
+* Type 4 is the 'Summary ASBR LSA' - created by an Area Border Router (ABR) to tell an area how to reach an ASBR (Autonomous System Boundary Router)
+![Image](./media/c.png)  
+* Type 5 is the 'Autonomous System (AS) External LSA' - created by an ASBR to advertise networks to advertise networks that are not ospf (autonomous system) 
+![Image](./media/d.png)
 
 To check, in exec mode `sh ip ospf database` - shows the various LSA's  
 
-## 
+## Stub Areas
+
+![Image](./media/stub_a.png)  
+
+In the below topology, the ABR sends Type 3 LSA's (to advertise area 1 and 0 to eachother) as well as the Type 4 LSA (to tell area 1 how to reach the EIGRP network)  
+
+![Image](./media/stub_b.png)  
+
+The ASBR also sends Type 5 LSA's (to advertise itself to area's 0 and 1) which are also passed on by the ABR  
+
+![Image](./media/stub_c.png)  
+
+Now in this secenario, if area 1 needs to reach the EIGRP network, all that is actually required is to route to the ABR, which can then handle routing to the EIGRP network... This will make the routing more efficient as not as many LSA's are needed. In this scenario, the ABR can just send a type 3 LSA (advertising the areas to eachother). This is known as a **stub area**.  
+
+A stub area is only directly connected to area 0 (through the ABR advertising) and is not directly connected to any autonomous systems (which the ABR handles). This scenario looks like this:  
+
+![Image](stub_d.png)  
+
+Now in this case, since area 1 is not connected to anything other than area 0, meaning outside network communication is only through the ABR, we will only need the default route instead. This type of area is called a **Totally Stubby Area (TSA)** [ok, I'm confused too but I promise I'm not trolling, the teacher though... idk :thonk]  
+
+HOWEVER, if the autonomous system IS connected to the stub area - it becomes a **Not-so-stubby area (NSSA)**. (ok at this point - teacher is defintely trolling :sob:)  
+
+HOWEVER, there is a rule saying that type 5 LSA's (made by the ASBR to advertise an autonomous system) CANNOT be sent to a stub area (da heck is going???). So an ASBR advertising the autonomous system to an area is now called a **T7 LSA**... bruh.....   
+
+![Image](stub_e.png)  
+
+Now in this scenario we are seing individual type 3 LSA's again, which can be replaced by default type 3 LSA's. If we do this, the area then becomes a **Totally not-so-stubby area (Totally NSSA)**  
+
+![what is going on???](./media/stub_f.png)  
+
+
+If at this point you are not confused, please considering donating IQ points to this brain, your supoort is appreciated  
+
+Type 6 LSAs were defined for Multicast Extensions to OSPF (MOSPF) - deprecated since ospf v3.  
