@@ -190,6 +190,18 @@ Now in this scenario we are seing individual type 3 LSA's again, which can be re
 ![what is going on???](./media/stub_f.png)  
 
 
-If at this point you are not confused, please considering donating IQ points to this brain, your supoort is appreciated  
+If at this point you are not so confused you are question your life, existence and the universe, please considering donating IQ points to this brain, your supoort is appreciated  
 
 Type 6 LSAs were defined for Multicast Extensions to OSPF (MOSPF) - deprecated since ospf v3.  
+
+## Making sense of all this weird stuff
+
+![Image](./media/stub_d.png)  
+
+In the first, stub area diagram, we see that the ABR is sending two types of Type 3 LSA's.... One is the 'individual t3 LSA' this is the LSA that is advertising Area 0. The second one is the 'Default T3 LSA' which is coming through the ABR from the ASBR and contains information on reaching the EIGRP network *indirectly* by routing through the ABR.   
+
+Now at this point, if we want to cut down even more, we can make the ABR our default route anyway, and cut out the 'individual t3 LSAs'. Now this is called a 'Totally Stubby Area', which kinda makes sense right? So now instead of 2 Type 3 LSAs we only need on, leading to the ABR and Area 0.  
+
+Now, if an autonomous system (non ospf syste,) is connected to a stub area, this is called a Not so stubby area. HOWEVER, if we want to get rid of the extra type 3 LSA here, we can... and then the area is called a TOTALLY not so stubby area.  
+
+![me rn](https://tenor.com/view/monkey-pissed-mad-angry-furious-gif-4720563)
