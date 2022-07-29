@@ -149,11 +149,15 @@ ABR's and ASBR's are not configured to be so, they automatically become so when 
 ## LSA Types
 
 The LSA (link-state advertisement) has a number of types:
-* Router LSA - created by each router, used to advertise directly attached networks  
-* Network LSA - created in transit networks for DR and BDR elections
-* Summary LSA - created by Area Border Routers (ABRs) to advertise networks/areas to eachther
+* Router/Type 1 LSA - created by each router, used to advertise directly attached networks
+* Network/Type 2 LSA - created in transit networks for DR and BDR elections - is not used in networks with no elections
+* Summary/Type 3 LSA - created by Area Border Routers (ABRs) to advertise networks/areas to eachther
 * Type 4 and 5 are created by ASBR's for advertisement to a non-ospf network
+  * Type 4 is the 'Summary ASBR LSA' - created by an Area Border Router (ABR) to tell an area how to reach an ASBR (Autonomous System Boundary Router)
+  ![Image](./media/c.png)  
+  * Type 5 is the 'Autonomous System (AS) External LSA' - created by an ASBR to advertise networks to advertise networks that are not ospf 
+  ![Image](./media/d.png)
 
-To check in exec mode `sh ip ospf database`  
+To check, in exec mode `sh ip ospf database` - shows the various LSA's  
 
 ## 
