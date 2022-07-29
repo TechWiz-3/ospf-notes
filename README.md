@@ -204,5 +204,5 @@ Now at this point, if we want to cut down even more, we can make the ABR our def
 
 Now, if an autonomous system (non ospf syste,) is connected to a stub area, this is called a Not so stubby area. HOWEVER, if we want to get rid of the extra type 3 LSA here, we can... and then the area is called a TOTALLY not so stubby area.  
 
-![me rn](https://c.tenor.com/x0OZJJFjCRQAAAAC/monkey-pissed.gif
+![me rn](https://c.tenor.com/x0OZJJFjCRQAAAAC/monkey-pissed.gif)
 
