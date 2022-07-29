@@ -202,9 +202,9 @@ In the first, stub area diagram, we see that the ABR is sending two types of Typ
 
 Now at this point, if we want to cut down even more, we can make the ABR our default route anyway, and cut out the both type 3 LSAs replacing them with a default route to the ABR. Now this is called a 'Totally Stubby Area', which kinda makes sense right? So now instead of 2 Type 3 LSAs we only need on, leading to the ABR and Area 0.  
 
-Now, if an autonomous system (non ospf syste,) is connected to a stub area (DIRECTLY), this is called a Not so stubby area. HOWEVER, if we want to get rid of the extra type 3 LSA here, we can... and then the area is called a TOTALLY not so stubby area.  
+Now, if an autonomous system (non ospf system) is connected to a stub area (DIRECTLY), this is called a Not so stubby area. HOWEVER, if we want to get rid of the type 3 LSAs (and replace with a default route) here, we can... and then the area is called a TOTALLY not so stubby area.  
 
-![Image](./media/stub_c.png)
+![Image](./media/stub_e.png)
 
 ![me rn](https://c.tenor.com/x0OZJJFjCRQAAAAC/monkey-pissed.gif)  
 
