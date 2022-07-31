@@ -257,7 +257,7 @@ In priveleged exec `sh ip ospf topology-info` and `ip ospf neighbour` `sh ip osp
 
 ### Single area
 In global config `router ospf [process id]` - process id is only local to the router and doesn't have to match the process id on the other routers  
-More about process ids: 32 bit total, 8 bits seperated by dots (basically an ipv4 format), the id is kinda like the name of the router, a unique id is required for each router.  
+I mixed up process ids and router ids but will still leave these notes: more about ~~process~~ router ids: 32 bit total, 8 bits seperated by dots (basically an ipv4 format), the id is kinda like the name of the router, a unique id is required for each router.  
 Image from [n-study.com](https://www.n-study.com/en/ospf-detail/router-id/), this depicts how theh router ID is determined, so if manual configuration isn't done, then the largest ip address of the loopback interfaces will be used, etc.
 ![n-study.com image](./media/g.webp)
 
