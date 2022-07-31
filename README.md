@@ -231,5 +231,36 @@ Totally not so stubby area:
 
 Now that's out of the way.... moving on... :sweat_smile: 
 
-## 
+## Router summarisation (supernetting)
+
+> A route summary is a consolidation of multiple routes into a single route advertisement  
+
+![Image](./media/e.png)  
+
+Reduces route table entries - saves cpu resources - can only summarise if the networks are similarly addressed. Each binary digit is moved down if all are the same, if they aren't the supernet address stops there. Naturally the subnet mask needs to reflect the supernet address.
+
+![Image](./media/f.png)
+
+## OSPF Tables
+
+Routers within the same area all have the same topology map. If a router goes down, then the other routers can immediately figure out alternate paths and change the routing tables.  
+
+While all routers have the same *topology table*, each routers has *it's own** *routing table*  
+
+Google maps example: everyone in the same suburb will have the same map of the area (topology table). However, each person will take different pathways to get to different destinations on the map, depending on our own location (routing table).  
+
+In priveleged exec `sh ip ospf topology-info` and `ip ospf neighbour` `sh ip ospf database` `sh ip route ospf`  
+
+## Commands and configuration information
+
+In global config `router ospf [process id]` - process id is only local to the router and doesn't have to match the process id on the other routers  
+More about process ids: 32 bit total, 8 bits seperated by dots (basically an ipv4 format), the id is kinda like the name of the router, a unique id is required for each router.  
+Image from ![n-study.com](https://www.n-study.com/en/ospf-detail/router-id/), this depicts how theh router ID is determined, so if manual configuration isn't done, then the largest ip address of the loopback interfaces will be used, etc.
+![n-study.com image](./media/g.webp)
+
+In router config `network [ip address] [wildcard mask] area [area-id] - wildcard mask is an inverted subnet mask, `255.255.255.255 - subnet mask`  
+
+
+
+
 
