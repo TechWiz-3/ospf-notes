@@ -333,4 +333,10 @@ In router config mode, `area [transiting area e.g. area 1] virtual-link [router-
 `sh ip ospft interface [interface]`  
 `debug ip ospf [option]` - options are found form the output of `debug ip ospf ?`  
 
+## Conclusions on 'process ids' and 'router ids'
 
+Quote from cisco ccna3:
+> *The OSPF router ID uniquely identifies each router within an OSPF area, and allows each router to participate in the election process in that area. On multiaccess networks, if there is no router priority value configured on the routers, and if there is a tie in the election, the router with the highest router ID is elected DR. The router priority value is a value chosen by the administrator and manually configured on the router. The administrator can manually configure the router ID, or the router can automatically assign itself its highest IPv4 loopback or physical address as the router ID. That interface has to be up but does not have to be participating in the OSPF process.*
+
+From a cisco [forumn](https://learningnetwork.cisco.com/s/question/0D53i00000KsrJtCAJ/ospf-question-process-id-vs-router-id):
+> *Process IDs are locally significant and are used to differentiate multiple instances of OSPF on the same router, as configured with #router ospf process-id.The Process IDs do not have to match on different routers*
