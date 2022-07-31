@@ -1,5 +1,7 @@
 # OSPF - Open Shortest Path First
 
+**Disclaimer: these are just my notes - some of them could be wrong or imply incorrect information, this is just me doing my best to learn OSPF**
+
 OSPF - link state routing protocol. This means that it sends out the routing tables through link state info (LSAs).  
 
 LSDB = Linkstate database = Topology map for the topology  
@@ -253,14 +255,82 @@ In priveleged exec `sh ip ospf topology-info` and `ip ospf neighbour` `sh ip osp
 
 ## Commands and configuration information
 
+### Single area
 In global config `router ospf [process id]` - process id is only local to the router and doesn't have to match the process id on the other routers  
 More about process ids: 32 bit total, 8 bits seperated by dots (basically an ipv4 format), the id is kinda like the name of the router, a unique id is required for each router.  
-Image from ![n-study.com](https://www.n-study.com/en/ospf-detail/router-id/), this depicts how theh router ID is determined, so if manual configuration isn't done, then the largest ip address of the loopback interfaces will be used, etc.
+Image from [n-study.com](https://www.n-study.com/en/ospf-detail/router-id/), this depicts how theh router ID is determined, so if manual configuration isn't done, then the largest ip address of the loopback interfaces will be used, etc.
 ![n-study.com image](./media/g.webp)
 
 In router config `network [ip address] [wildcard mask] area [area-id] - wildcard mask is an inverted subnet mask, `255.255.255.255 - subnet mask`  
+If multiple networks are in the same area, then repeat the command  
 
+> In OSPF, we only give an IP address to match with our interfaces
+> If we want **all** networks connected to our router's interfaces to be advertised then we can do `network 0.0.0.0 255.255.255.255 area 0` - this is only appropriate if all the router interfaces belong to the same area
 
+Notification messages: these notify you that adjacencies (neighbour best buddies) have been created. To verify this - `sh ip ospf neighbor` (amnerican spelling)  
 
+Administrativ Distance (AD): routers use AD in order to select the best path when there are two or more different routes to the same destination coming from two different routing protocols
+
+### Default routes
+
+> Route used when there is no other available route in the routing table
+
+To propagate a default route in OSPF: in router config mode, `default-information originate`  
+At the same time, we need to prevent hello packets being sent to internet interfaces - this can be done using the `passive-interface` command. In router config mode, `passive-interface [interface]`
+
+### Multi area OSPF network
+
+Not gonna go into full detail here...  
+
+Only need to update area number - same as single area (almost)  
+
+Importing routes from other protocols (ASBR), in config router (enter using `router [alternate routing protocol] [id]`) `redistribute ospf [id] metric 1 1 1 1 1` and `redistribute eigrp [id] metric 1 subnets`
+
+### Analysing the routing table
+
+Global config mode: `sh ip protocol` `sh ip ospf neighbor`  
+
+Exec: `sh ip route`  
+`C` is a route directly connected to the router  
+`L` are local routes  
+`O` are routes learnt by ospf  
+`O IA` as above but also Inter-area
+`O E2 - these are redistributed paths [external type 2] from the eigrp network as in the previous section  
+(ok im confused)  
+
+By default external routes are marked as type 2 routes  
+![Image](./media/h.png)  
+
+### ABR route summarisation
+
+In router config, `area [#] ranger [ip address] [subnet mask]`  
+
+For an ASBR `summary-address` command instead
+
+### Path cost
+
+Cost is OSPF's metric  
+Cost = reference bandwidth / interface bandwidth  
+
+By default the reference bandwidth is 100 Mbps  
+
+Cost cannot be a decimal, must be rounded meaning that `100 Mbps / 100 Mbps = 1` and `100 Mbps / 1 Gbps = 1`... oops  
+
+> Set the reference bandwidth to at least as high as the fastest link in the network (or higher) as a good practise  
+
+To set reference bandwidth: in router config, `auto-cost reference-bandwidth [bandwidth]`  
+
+### Virtual links
+
+Say we need to connect a new area to are 1 - virtual links can connect it to area 0 through route tunneling. Howver, transit cannot be a stub area.  
+
+In router config mode, `area [transiting area e.g. area 1] virtual-link [router-id of the other end e.g. area 0]`
+
+##$ Troubleshooting
+
+`clear ip ospf process` after changing the router id - why were we not told this 6 episodes ago?  
+
+`sh ip ospft interface [interface]`  
+`debug ip ospf [option]` - options are found form the output of `debug ip ospf ?`  
 
 
