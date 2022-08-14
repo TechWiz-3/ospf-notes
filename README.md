@@ -253,7 +253,30 @@ Google maps example: everyone in the same suburb will have the same map of the a
 
 In priveleged exec `sh ip ospf topology-info` and `ip ospf neighbour` `sh ip ospf database` `sh ip route ospf`  
 
+## Router ID
+Unique IPv4-like address that identifiies the router.  
+Set by `router-id x.x.x.x` - remember to `clear ip ospf process` to refresh after change  
+If not manually set:
+1. Highest loopback interface IP address
+If no loopback interface:
+2. Highest IP address on active interface
+
+## Process ID
+Not relevant to elections - this is set with the `router ospf <1-65535>` command  
+A router can have multiple processes each for a different interface - this is for **finish this later**
+
+## Priority determination
+1. Manually configured `router ospf priority <1-255>` - the higher the number the more the priority - `0` removes the router from the election
+2. Default set to 1
+
+
+## Election process
+1. Highest OSPF priority (max is 255)
+If a tie occurs:
+2. Highest router ID
+
 ## Commands and configuration information
+**remember to improve commands explanation section and what process ids are actually for**  
 
 ### Single area
 In global config `router ospf [process id]` - process id is only local to the router and doesn't have to match the process id on the other routers  
